@@ -21,5 +21,5 @@ jobs:
           nvm use
           npm ci
           npx prisma generate
-          npm run dev
+          pm2 start npm --name "project2_sever" -- run dev
           
