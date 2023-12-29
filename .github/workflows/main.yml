@@ -1,0 +1,30 @@
+name: Deploy
+on:
+  push:
+    branches: [ master ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:       
+    - name: Kết nối ssh linux -> và pull
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        password: ${{ secrets.PASSWORD }}
+        port: 22
+        script: |
+          cd /var/www/quy_projectmd2/PROJECT_MODULE2_SERVER
+          pm2 delete all
+          git pull
+          git status
+          . $HOME/.nvm/nvm.sh
+          nvm use
+          npm ci
+          npm run build
+          npx prisma generate
+          cp node_modules dist/ -r
+          cp .env dist/ 
+          cd dist/
+          pm2 start src/main.js
+          
