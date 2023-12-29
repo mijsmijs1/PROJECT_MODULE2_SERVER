@@ -15,12 +15,12 @@ jobs:
         port: 22
         script: |
           cd /var/www/quy_projectmd2/PROJECT_MODULE2_SERVER
-          pm2 delete all
           git pull
           git status
           . $HOME/.nvm/nvm.sh
           nvm use
           npm ci
           npx prisma generate
+          pm2 delete all
           pm2 start npm --name "project2_sever" -- run dev
           
