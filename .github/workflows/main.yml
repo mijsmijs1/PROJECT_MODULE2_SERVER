@@ -15,6 +15,7 @@ jobs:
         port: 22
         script: |
           cd /var/www/quy_projectmd2/PROJECT_MODULE2_SERVER
+          pm2 delete all
           git pull
           git status
           . $HOME/.nvm/nvm.sh
